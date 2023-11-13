@@ -13,10 +13,37 @@ fs.mkdir(path.join(__dirname,'test'),(error) =>{
 */
 
 //criando arquivo
+
 fs.writeFile(path.join(__dirname,'test/','teste.txt'),'Hello World',(error =>{
 	if(error){
 		return console.log("Erro",error)
 	}
 
-	return console.log("Arquivo Criado")
+	console.log('arquivo criado com sucesso')
+
+	fs.appendFile(
+		path.join(__dirname,'test/','teste.txt'),
+		"Oi Planela",
+		(error) =>{
+			if(error){
+				return console.log(error);
+			}
+
+			return console.log("Arquivo modificado com sucesso");
+		});
+
+
+		//ler arquivo
+		fs.readFile(
+			path.join(__dirname,'test/','teste.txt'),
+			'utf-8',
+			(error,data) =>{
+				if(error){
+					return console.log(error)
+				}
+		 	
+			return console.log(data);
+			}
+		);
 }))
+
