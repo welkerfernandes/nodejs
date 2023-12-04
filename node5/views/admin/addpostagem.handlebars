@@ -1,0 +1,48 @@
+<h3 class='h3'>Nova Categoria</h3>
+<div class="card">
+<div class="card-body">
+
+<form class='form-group' action='/admin/postagem/nova' method='POST'>
+	<table width="100%">
+		<tr>
+			<td>
+				<input type="text" name='titulo' required placeholder="titulo:" class='form-control mt-3'>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="text" name="slug" required placeholder="Slug" class='form-control mt-3'>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="text" name="descricao" required placeholder="Descrição" class='form-control mt-3'>
+			</td>
+		</tr>
+		<tr>
+			<td><br/>
+				<textarea placeholder="Conteúdo" required name='conteudo' class='form-control'></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<br/>
+				<select class='form-control' required name="categoria" >
+					<option value="0" >Selecione a Categoria</option>
+					{{#each categoria}}
+					<option value="{{id}}" >{{nome}}</option>
+					{{else}}
+					<option value="0">Sem categoria</option>
+					{{/each}}
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<button type="submit" class="btn btn-success mt-3">Cadastrar</button>
+			</td>
+		</tr>
+	</table>
+</form>
+</div>
+</div>

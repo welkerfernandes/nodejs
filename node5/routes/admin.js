@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const bodyparser = require('body-parser')
 const Categoria = require('../models/Categoria')
+const Postagem = require('../models/Postagem')
 
 router.get('/',(req,res)=>{
 	res.render("admin/index")
@@ -120,6 +121,45 @@ router.post('/categorias/deletar', (req,res)=>{
 		res.redirect('/admin/categorias')
 	})
 
+})
+
+
+router.get('/postagens',(req,res)=>{
+	res.render('admin/postagens')
+})
+
+router.get('/postagens/add',(req,res) =>{
+	Categoria.findAll().then((categoria)=>{
+		res.render('admin/addpostagem',{categoria:categoria})
+	}).catch((err)=>{
+		req.flash('error_msg','Error')
+		res.redirect('/admin')
+	})
+	
+})
+
+router.post('/postagem/nova',(req,res)=>{
+	Postagem.create({
+		titulo: req.body.titulo,
+		slug: req.body.slug,
+		descricao: req.body.descricao,
+		conteudo: req.body.conteudo,
+		categoria: req.body.categoria
+
+	}).then(()=>{
+		req.flash('success_msg','Postado com Sucesso')
+		res.redirect('/admin/postagens/add')
+	}).catch((err)=>{
+		req.flash('error_msg','Error')
+		res.redirect('/admin/postagens/add')
+	})
+})
+
+router.get('/postagens',(req,res)=>{
+	Postagem.findAll({order:[['id','DESC']]}).then((postagens)=>{
+		res.render('admin/postagens',{postagens:postagens})
+	})
+	
 })
 
 module.exports = router
